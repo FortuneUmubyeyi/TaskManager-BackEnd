@@ -6,7 +6,6 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 
-// POST /api/auth/register - Register a user
 router.post('/register', [
   check('username', 'Username is required').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail(),
@@ -56,7 +55,6 @@ router.post('/register', [
   }
 });
 
-// POST /api/auth/login - Authenticate user & get token
 router.post('/login', [
   check('email', 'Please include a valid email').isEmail(),
   check('password', 'Password is required').exists()
@@ -99,7 +97,6 @@ router.post('/login', [
   }
 });
 
-// GET /api/auth/user - Get authenticated user
 router.get('/user', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
